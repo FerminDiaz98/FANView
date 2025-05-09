@@ -33,7 +33,7 @@ document.getElementById("handleGoogle").addEventListener("click", function() {
     const user = result.user;
     // IdP data available using getAdditionalUserInfo(result)
     console.log(user)
-    window.location.href="../dashboard.html"
+    window.location.href="/dashboard.html"
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
