@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Datos</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Opciones para Agregar Datos</h1>
+        <form action="{{ url_for('agregar_monitor') }}">
+            <button type="submit">Agregar Monitor</button>
+        </form>
+        <form action="{{ url_for('agregar_centro') }}">
+            <button type="submit">Agregar Centro</button>
+        </form>
+        <form action="{{ url_for('agregar_empresa') }}">
+            <button type="submit">Agregar Empresa</button>
+        </form>
+        <form action="{{ url_for('agregar_especie') }}">
+            <button type="submit">Agregar Especie</button>
+        </form>
+    </div>
+</body>
+</html>

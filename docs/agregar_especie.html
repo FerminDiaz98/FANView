@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Especie</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        form {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Agregar Especie</h2>
+        <form method="POST">
+            <label for="nombre_especie">Nombre de la Especie:</label>
+            <input type="text" id="nombre_especie" name="nombre_especie" required><br>
+
+            <label for="genero">Género:</label>
+            <input type="text" id="genero" name="genero" required><br>
+
+            <label for="grupo">Grupo:</label>
+            <input type="text" id="grupo" name="grupo" required><br>
+
+            <label for="nocividad">Nocividad (Ej: Sí, No):</label>
+            <input type="text" id="nocividad" name="nocividad" required><br>
+
+            <label for="valor_normal">Valor Normal:</label>
+            <input type="number" id="valor_normal" name="valor_normal" required><br>
+
+            <label for="valor_alerta">Valor de Alerta:</label>
+            <input type="number" id="valor_alerta" name="valor_alerta" required><br>
+
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>

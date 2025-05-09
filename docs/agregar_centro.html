@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Centro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        form {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Agregar Centro</h2>
+        <form method="POST">
+            <label for="nombre_centro">Nombre del Centro:</label>
+            <input type="text" id="nombre_centro" name="nombre_centro" required><br>
+
+            <label for="empresa">Nombre de la Empresa:</label>
+            <input type="text" id="empresa" name="empresa" required><br>
+
+            <label for="latitud">Latitud:</label>
+            <input type="text" id="latitud" name="latitud" required><br>
+
+            <label for="longitud">Longitud:</label>
+            <input type="text" id="longitud" name="longitud" required><br>
+
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>

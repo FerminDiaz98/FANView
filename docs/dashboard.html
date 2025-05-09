@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Altura completa de la ventana */
+            margin: 0;
+            font-family: 'Roboto', sans-serif; /* Aplica el estilo de letra */
+        }
+        .dashboard-container {
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Monitor: {{ monitor_name }}</h1>
+
+        <!-- Formulario para Geolocalización -->
+        {% if geolocalizacion_enabled %}
+        <form action="{{ url_for('geolocalizacion') }}">
+            <button type="submit">Geolocalización</button>
+        </form>
+        {% else %}
+        <form>
+            <button type="button" disabled style="opacity: 0.5;">Geolocalización (No disponible)</button>
+        </form>
+        {% endif %}
+
+        <!-- Formulario para Ingresar Muestra -->
+        <form action="{{ url_for('ingresar_muestra') }}">
+            <button type="submit">Ingresar Muestra</button>
+        </form>
+
+        <!-- Nueva opción Agregar Datos, solo visible para administradores -->
+        {% if geolocalizacion_enabled %}
+        <form action="{{ url_for('agregar_datos') }}">
+            <button type="submit">Agregar Datos</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>
