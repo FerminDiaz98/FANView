@@ -8,19 +8,31 @@
 </head>
 <body>
     <div class="container">
+        <h3 id="userName"></h3>
+        <img id="userProfilePicture" width="20%">
+        <h3 id="userEmail"></h3>
+    </div>
+    <div class="container">
         <h1>Opciones para Agregar Datos</h1>
-        <form action="{{ url_for('agregar_monitor') }}">
-            <button type="submit">Agregar Monitor</button>
-        </form>
-        <form action="{{ url_for('agregar_centro') }}">
-            <button type="submit">Agregar Centro</button>
-        </form>
-        <form action="{{ url_for('agregar_empresa') }}">
-            <button type="submit">Agregar Empresa</button>
-        </form>
-        <form action="{{ url_for('agregar_especie') }}">
-            <button type="submit">Agregar Especie</button>
-        </form>
+        <button onclick="agregar_monitor()" type="submit">Agregar Monitor</button>
+        <button onclick="agregar_centro()" type="submit">Agregar Centro</button>
+        <button onclick="agregar_empresa()" type="submit">Agregar Empresa</button>
+        <button onclick="agregar_especie()" type="submit">Agregar Especie</button>
+        <button onclick="dashboard()" type="submit">Volver</button>
     </div>
 </body>
+<script>
+    function agregar_monitor() {
+        window.location.href = './agregar_monitor.html';}
+    function agregar_centro() {
+        window.location.href = './agregar_centro.html';}
+    function agregar_empresa() {
+        window.location.href = './agregar_empresa.html';}
+    function agregar_especie() {
+        window.location.href = './agregar_especie.html';}
+    function dashboard() {
+        window.location.href = './dashboard.html';}
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+<script type="module" src="js/userInfo.js"></script>
 </html>

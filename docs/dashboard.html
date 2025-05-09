@@ -27,14 +27,17 @@
             <button type="submit">Ingresar Muestra</button>
         </form>
 
+        
         <!-- Nueva opción Agregar Datos, solo visible para administradores -->
-        {% if geolocalizacion_enabled %}
-        <form action="{{ url_for('agregar_datos') }}">
-            <button type="submit">Agregar Datos</button>
-        </form>
-        {% endif %}
+        <!-- {% if geolocalizacion_enabled %} -->
+        <button onclick="agregar_datos()">Agregar Datos</button>
+        <!-- {% endif %} -->
     </div>
 </body>
+<script>
+    function agregar_datos() {
+        window.location.href = './agregar_datos.html';}
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
 <script type="module" src="js/userInfo.js"></script>
 </html>

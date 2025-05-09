@@ -13,7 +13,7 @@ function updateUserProfile(user){
     const userEmail = user.email;
     const userProfilePicture = user.photoURL;
   
-    document.getElementById("userName").textContent = "¡Bienvenido " + userName + "!"
+    document.getElementById("userName").textContent = userName
     document.getElementById("userEmail").textContent = userEmail
     document.getElementById("userProfilePicture").src = userProfilePicture
 }
