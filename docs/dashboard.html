@@ -8,18 +8,19 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>Monitor: {{ monitor_name }}</h1>
-
+        <h1 id="userName"></h1><img id="userProfilePicture">
+        <h2 id="userEmail"></h2>
+        
         <!-- Formulario para Geolocalización -->
-        {% if geolocalizacion_enabled %}
+        <!-- {% if geolocalizacion_enabled %}
         <form action="{{ url_for('geolocalizacion') }}">
             <button type="submit">Geolocalización</button>
         </form>
-        {% else %}
+        {% else %} -->
         <form>
             <button type="button" disabled style="opacity: 0.5;">Geolocalización (No disponible)</button>
         </form>
-        {% endif %}
+        <!-- {% endif %} -->
 
         <!-- Formulario para Ingresar Muestra -->
         <form action="{{ url_for('ingresar_muestra') }}">
@@ -34,4 +35,6 @@
         {% endif %}
     </div>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+<script type="module" src="js/firebaseConfig.js"></script>
 </html>

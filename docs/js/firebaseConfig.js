@@ -33,7 +33,7 @@ document.getElementById("handleGoogle").addEventListener("click", function() {
     const user = result.user;
     // IdP data available using getAdditionalUserInfo(result)
     console.log(user)
-    window.location.href="/dashboard.html"
+    window.location.href="./dashboard.html"
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -43,4 +43,14 @@ document.getElementById("handleGoogle").addEventListener("click", function() {
   });
 });
 
-//  function update()
+function updateUserProfile(user){
+  const userName = user.displayName;
+  const userEmail = user.email;
+  const userProfilePicture = user.photoURL;
+
+  document.getElementById("userName").textContent = "¡Bienvenido " + userName + "!"
+  document.getElementById("userEmail").textContent = userEmail
+  document.getElementById("userProfilePicture").src = userProfilePicture
+}
+
+updateUserProfile()
