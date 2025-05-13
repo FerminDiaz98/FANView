@@ -17,24 +17,22 @@
             <button type="submit">Geolocalización</button>
         </form>
         {% else %} -->
-        <form>
-            <button type="button" disabled style="opacity: 0.5;">Geolocalización (No disponible)</button>
-        </form>
+        <button onclick="geolocalizacion()">Geolocalización</button><br>
         <!-- {% endif %} -->
 
-        <!-- Formulario para Ingresar Muestra -->
-        <form action="{{ url_for('ingresar_muestra') }}">
-            <button type="submit">Ingresar Muestra</button>
-        </form>
-
+        <button onclick="ingresar_muestra()">Ingresar Muestra</button><br>
         
         <!-- Nueva opción Agregar Datos, solo visible para administradores -->
         <!-- {% if geolocalizacion_enabled %} -->
-        <button onclick="agregar_datos()">Agregar Datos</button>
+        <button onclick="agregar_datos()">Agregar Datos</button><br>
         <!-- {% endif %} -->
     </div>
 </body>
 <script>
+    function geolocalizacion() {
+        window.location.href = './geolocalizacion.html';}
+    function ingresar_muestra() {
+        window.location.href = './ingresar_muestra.html';}
     function agregar_datos() {
         window.location.href = './agregar_datos.html';}
 </script>

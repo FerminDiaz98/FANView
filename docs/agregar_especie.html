@@ -8,10 +8,15 @@
 </head>
 <body>
     <div class="container">
+        <h3 id="userName"></h3>
+        <img id="userProfilePicture" width="20%">
+        <h3 id="userEmail"></h3>
+    </div>
+    <div class="container">
         <h2>Agregar Especie</h2>
-        <form method="POST">
-            <label for="nombre_especie">Nombre de la Especie:</label>
-            <input type="text" id="nombre_especie" name="nombre_especie" required><br>
+        <form method="POST" id="form">
+            <label for="nombre">Nombre de la Especie:</label>
+            <input type="text" id="nombre" name="nombre" required><br>
 
             <label for="genero">Género:</label>
             <input type="text" id="genero" name="genero" required><br>
@@ -19,17 +24,27 @@
             <label for="grupo">Grupo:</label>
             <input type="text" id="grupo" name="grupo" required><br>
 
-            <label for="nocividad">Nocividad (Ej: Sí, No):</label>
-            <input type="text" id="nocividad" name="nocividad" required><br>
+            <label for="nocividad">Nocividad:</label>
+            <select id="nocividad" name="nocividad" required>
+            <option value="">--Elegir--</option>
+            <option value="Si">Si</option>
+            <option value="No">No</option></select><br>
 
             <label for="valor_normal">Valor Normal:</label>
             <input type="number" id="valor_normal" name="valor_normal" required><br>
 
             <label for="valor_alerta">Valor de Alerta:</label>
             <input type="number" id="valor_alerta" name="valor_alerta" required><br>
-
-            <button type="submit">Ingresar</button>
         </form>
+            <button id=submitdb data-db="especie">Ingresar</button>
+            <button onclick="agregar_datos()">Volver</button>
     </div>
 </body>
+<script>
+function agregar_datos() {
+    window.location.href = './agregar_datos.html';}
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+<script type="module" src="js/userInfo.js"></script>
+<script type="module" src="js/submitdb.js"></script>
 </html>

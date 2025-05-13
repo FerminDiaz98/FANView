@@ -8,22 +8,34 @@
 </head>
 <body>
     <div class="container">
+        <h3 id="userName"></h3>
+        <img id="userProfilePicture" width="20%">
+        <h3 id="userEmail"></h3>
+    </div>
+    <div class="container">
         <h2>Agregar Centro</h2>
-        <form method="POST">
-            <label for="nombre_centro">Nombre del Centro:</label>
-            <input type="text" id="nombre_centro" name="nombre_centro" required><br>
+        <form method="POST" id="form">
+            <label for="nombre">Nombre del Centro:</label>
+            <input type="text" id="nombre" name="nombre" required><br>
 
             <label for="empresa">Nombre de la Empresa:</label>
             <input type="text" id="empresa" name="empresa" required><br>
 
             <label for="latitud">Latitud:</label>
-            <input type="text" id="latitud" name="latitud" required><br>
+            <input type="number" id="latitud" name="latitud" required><br>
 
             <label for="longitud">Longitud:</label>
-            <input type="text" id="longitud" name="longitud" required><br>
-
-            <button type="submit">Ingresar</button>
+            <input type="number" id="longitud" name="longitud" required><br>
         </form>
+            <button id=submitdb data-db="centro">Ingresar</button>
+            <button onclick="agregar_datos()">Volver</button>
     </div>
 </body>
+<script>
+function agregar_datos() {
+    window.location.href = './agregar_datos.html';}
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+<script type="module" src="js/userInfo.js"></script>
+<script type="module" src="js/submitdb.js"></script>
 </html>
