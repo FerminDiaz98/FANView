@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ingresar Muestra</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div>
+        <h3 id="userName" style="display: none;"></h3>
+        <img id="userProfilePicture" width="20%" style="display: none;">
+        <h3 id="userEmail" style="display: none;"></h3>
+    </div><br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <h2 class="text-center mb-3">Datos</h2>
+                <label>Seleccione una empresa:</label>
+                <div id="empresa-dropdown" class="dash-dropdown"></div><br>
+                <label>Seleccione tipo de monitoreo:</label>
+                <div id="monitoreo-dropdown" class="dash-dropdown"></div><br>
+                <label>Seleccione las especies:</label>
+                <div id="especie-checklist" class="dash-dropdown" style="width: 100%;"></div><br>
+                <label>Seleccione las profundidades:</label>
+                <div id="profundidad-checklist">
+                    <label style="display: block;" class="">
+                        <input class="" type="checkbox">0 metros</label>
+                    <label style="display: block;" class="">
+                        <input class="" type="checkbox">5 metros</label>
+                    <label style="display: block;" class="">
+                        <input class="" type="checkbox">10 metros</label>
+                    <label style="display: block;" class="">
+                        <input class="" type="checkbox">15 metros</label>
+                </div><br>
+                <label>Seleccione Fecha:</label>
+                <div id="fecha-picker" style="position: relative; display: inline-block;">
+                    <div class="SingleDatePicker SingleDatePicker_1">
+                        <div>
+                            <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
+                                <div class="DateInput DateInput_1">
+                                    <input class="DateInput_input DateInput_input_1" aria-label="Date" type="text" id="date" name="date" placeholder="Date" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date" value="05/14/2025">
+                                    <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                AQUI VA A IR EL MAPITA
+                leafletjs
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+<script type="module" src="js/userInfo.js"></script>
+</html>
