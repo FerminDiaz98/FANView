@@ -56,6 +56,8 @@ let tem_data = {}
 let sal_data = {}
 let oxi_data = {}
 
+let subirDatos;
+
 mostrarResumenBtn.addEventListener('click', function(){
     if(submitForm.checkValidity()){
         mostrarResumen();
@@ -103,8 +105,8 @@ function mostrarResumen(){
             <p>Empresa: `+muestra_data.Empresa+`</p>
             <p>Centro: `+muestra_data.Centro+`</p>
             <p>Fecha y Hora de Muestreo: `+muestra_data.Time_Muestreo+`</p>
-            <p>Fecha y Hora de Muestreo: `+muestra_data.Time_Recepcion+`</p>
-            <p>Fecha y Hora de Muestreo: `+muestra_data.Time_Analisis+`</p>
+            <p>Fecha y Hora de Recepción: `+muestra_data.Time_Recepcion+`</p>
+            <p>Fecha y Hora de Análisis: `+muestra_data.Time_Analisis+`</p>
             <p>Temperatura: 0m = `+tem_data["0m"]+`°C, 5m = `+tem_data["5m"]+`°C, 10m = `+tem_data["10m"]+`°C, 15m = `+tem_data["15m"]+`°C</p>
             <p>Salinidad: 0m = `+sal_data["0m"]+`PSU, 5m = `+sal_data["5m"]+`PSU, 10m = `+sal_data["10m"]+`PSU, 15m = `+sal_data["15m"]+`PSU</p>
             <p>Oxígeno: 0m = `+oxi_data["0m"]+`mg/L, 5m = `+oxi_data["5m"]+`mg/L, 10m = `+oxi_data["10m"]+`mg/L, 15m = `+oxi_data["15m"]+`mg/L</p>
@@ -122,4 +124,41 @@ function mostrarResumen(){
             })
         }
     })
+
+    resumenHTML.innerHTML +=  `<button id="ingresar_datos" class="mt-3 btn-primary">Ingresar datos de muestra</button>`;
+    subirDatos = document.getElementById("ingresar_datos")
+}
+
+subirDatos.addEventListener('click', function(){
+    if(true){
+        subirDatosMuestra();
+    }
+    else{
+        alert("Testalert");
+    }
+})
+
+function subirDatosMuestra(){
+    console.log("subir datos muestra button")
+    // set(ref(rtdb, 'Muestra/'+ especie_nombre), especie_data)
+
+    // const especie_nombre = document.getElementById('nombre').value
+    // const especie_data = {
+    //     'Genero': document.getElementById('genero').value,
+    //     'Grupo': document.getElementById('grupo').value,
+    //     'Nocividad': document.getElementById('nocividad').value,
+    //     'Valor_Normal': document.getElementById('valor_normal').value,
+    //     'Valor_Alerta': document.getElementById('valor_alerta').value
+    // }
+    // // console.log(especie_nombre)
+    // // console.log(especie_data)
+    // set(ref(rtdb, 'Especie/'+ especie_nombre), especie_data) //realtime
+    // // addDoc(collection(fsdb,'especie/'+ especie_nombre), especie_data) //firestore
+    // alert('Añadido Especie '+especie_nombre+
+    //     '\nGenero: '+especie_data.Genero+
+    //     '\nGrupo: '+especie_data.Grupo+
+    //     '\nNocividad: '+especie_data.Nocividad+
+    //     '\nValor Normal: '+especie_data.Valor_Normal+
+    //     '\nValor Alerta: '+especie_data.Valor_Alerta)
+    // submitForm.reset()
 }
