@@ -17,21 +17,28 @@
             <div class="col-4">
                 <h2 class="text-center mb-3">Datos</h2>
                 <label>Seleccione una empresa:</label>
-                <div id="empresa-dropdown" class="dash-dropdown"></div><br>
+                <div id="empresa-dropdown" class="dash-dropdown">
+                    
+                </div><br>
                 <label>Seleccione tipo de monitoreo:</label>
-                <div id="monitoreo-dropdown" class="dash-dropdown"></div><br>
+                <div id="monitoreo-dropdown" class="dash-dropdown">
+                    <select>
+                        <option value="centro">Centro</option>
+                        <option value="barcos">Barcos</option>
+                    </select>
+                </div><br>
                 <label>Seleccione las especies:</label>
-                <div id="especie-checklist" class="dash-dropdown" style="width: 100%;"></div><br>
+                <div id="especie-checklist" class="dash-dropdown" style="width: 100%;">
+
+                </div><br>
                 <label>Seleccione las profundidades:</label>
                 <div id="profundidad-checklist">
-                    <label style="display: block;" class="">
-                        <input class="" type="checkbox">0 metros</label>
-                    <label style="display: block;" class="">
-                        <input class="" type="checkbox">5 metros</label>
-                    <label style="display: block;" class="">
-                        <input class="" type="checkbox">10 metros</label>
-                    <label style="display: block;" class="">
-                        <input class="" type="checkbox">15 metros</label>
+                    <select id="profundidades" class="form-control" required>
+                        <option value="0">0 metros</option>
+                        <option value="5">5 metros</option>
+                        <option value="10">10 metros</option>
+                        <option value="15">15 metros</option>
+                    </select>
                 </div><br>
                 <label>Seleccione Fecha:</label>
                 <div id="fecha-picker" style="position: relative; display: inline-block;">
