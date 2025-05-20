@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ingresar Muestra</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/map.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
     <div>
@@ -17,23 +19,28 @@
             <div class="col-4">
                 <h2 class="text-center mb-3">Datos</h2>
                 <label>Seleccione una empresa:</label>
-                <div id="empresa-dropdown" class="dash-dropdown">
-                    
+                <div id="empresa-dropdown">
+                    <select class="form-control">
+                        <option value="" disabled selected hidden>--Elegir Empresa--</option>
+                        <option value="test">TEST</option>
+                    </select>
                 </div><br>
                 <label>Seleccione tipo de monitoreo:</label>
-                <div id="monitoreo-dropdown" class="dash-dropdown">
-                    <select>
+                <div id="monitoreo-dropdown">
+                    <select class="form-control">
                         <option value="centro">Centro</option>
                         <option value="barcos">Barcos</option>
                     </select>
                 </div><br>
                 <label>Seleccione las especies:</label>
                 <div id="especie-checklist" class="dash-dropdown" style="width: 100%;">
-
+                    <select class="form-control">
+                    <option value="" disabled selected hidden>--Elegir Especie--</option>
+                    </select>
                 </div><br>
                 <label>Seleccione las profundidades:</label>
                 <div id="profundidad-checklist">
-                    <select id="profundidades" class="form-control" required>
+                    <select id="profundidades" class="form-control">
                         <option value="0">0 metros</option>
                         <option value="5">5 metros</option>
                         <option value="10">10 metros</option>
@@ -41,26 +48,16 @@
                     </select>
                 </div><br>
                 <label>Seleccione Fecha:</label>
-                <div id="fecha-picker" style="position: relative; display: inline-block;">
-                    <div class="SingleDatePicker SingleDatePicker_1">
-                        <div>
-                            <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
-                                <div class="DateInput DateInput_1">
-                                    <input class="DateInput_input DateInput_input_1" aria-label="Date" type="text" id="date" name="date" placeholder="Date" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date" value="05/14/2025">
-                                    <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <input id="time_muestreo" type="datetime-local" class="form-control"><br>
             </div>
             <div class="col-8">
-                AQUI VA A IR EL MAPITA
-                leafletjs
+                <div id="map"></div>
             </div>
         </div>
     </div>
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
 <script type="module" src="js/userInfo.js"></script>
+<script type="module" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="js/geolocalizacion.js"></script>
 </html>

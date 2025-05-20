@@ -56,7 +56,7 @@ let tem_data = {}
 let sal_data = {}
 let oxi_data = {}
 
-let subirDatos;
+const subirDatos = document.getElementById("ingresar_datos");
 
 mostrarResumenBtn.addEventListener('click', function(){
     if(submitForm.checkValidity()){
@@ -124,9 +124,7 @@ function mostrarResumen(){
             })
         }
     })
-
-    resumenHTML.innerHTML +=  `<button id="ingresar_datos" class="mt-3 btn-primary">Ingresar datos de muestra</button>`;
-    subirDatos = document.getElementById("ingresar_datos")
+    subirDatos.style.display = "block"
 }
 
 subirDatos.addEventListener('click', function(){
@@ -141,25 +139,25 @@ subirDatos.addEventListener('click', function(){
 function subirDatosMuestra(){
     console.log("subir datos muestra button")
     //Muestra_EMPRESA_CENTRO_(TODAY)
-    // set(ref(rtdb, 'Muestra/'+ especie_nombre), especie_data)
-
-    // const especie_nombre = document.getElementById('nombre').value
-    // const especie_data = {
-    //     'Genero': document.getElementById('genero').value,
-    //     'Grupo': document.getElementById('grupo').value,
-    //     'Nocividad': document.getElementById('nocividad').value,
-    //     'Valor_Normal': document.getElementById('valor_normal').value,
-    //     'Valor_Alerta': document.getElementById('valor_alerta').value
-    // }
-    // // console.log(especie_nombre)
-    // // console.log(especie_data)
-    // set(ref(rtdb, 'Especie/'+ especie_nombre), especie_data) //realtime
-    // // addDoc(collection(fsdb,'especie/'+ especie_nombre), especie_data) //firestore
-    // alert('Añadido Especie '+especie_nombre+
-    //     '\nGenero: '+especie_data.Genero+
-    //     '\nGrupo: '+especie_data.Grupo+
-    //     '\nNocividad: '+especie_data.Nocividad+
-    //     '\nValor Normal: '+especie_data.Valor_Normal+
-    //     '\nValor Alerta: '+especie_data.Valor_Alerta)
-    // submitForm.reset()
+    let today = new Date()
+    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today), muestra_data)
+    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Temperatura/'), tem_data)
+    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Salinidad/'), sal_data)
+    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Oxígeno/'), oxi_data)
+    
+    get(child(ref(rtdb), 'Especie/')).then((items)=>{
+        if(items.exists()){
+            items.forEach((child)=>{
+                console.log(document.getElementById('0m'+child.key).value)
+                let especie_data = {
+                    '0m': document.getElementById('0m'+child.key).value,
+                    '5m': document.getElementById('5m'+child.key).value,
+                    '10m': document.getElementById('10m'+child.key).value,
+                    '15m': document.getElementById('15m'+child.key).value,
+                }
+                set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Especie/'+child.key+'/'), especie_data)
+            })
+        }
+    })
+    // submitForm.reset() note to self, fix this later (alert is enough?)
 }
