@@ -20,7 +20,7 @@
                 <h2 class="text-center mb-3">Datos</h2>
                 <label>Seleccione una empresa:</label>
                 <div id="empresa-dropdown">
-                    <select class="form-control">
+                    <select id="empresa_select" data-db="Empresa" class="form-control" disabled>
                         <option value="" disabled selected hidden>--Elegir Empresa--</option>
                         <option value="test">TEST</option>
                     </select>
@@ -34,8 +34,8 @@
                 </div><br>
                 <label>Seleccione las especies:</label>
                 <div id="especie-checklist" class="dash-dropdown" style="width: 100%;">
-                    <select class="form-control">
-                    <option value="" disabled selected hidden>--Elegir Especie--</option>
+                    <select id="especie_select" data-db="Especie" class="form-control" disabled>
+                        <option value="" disabled selected hidden>--Elegir Especie--</option>
                     </select>
                 </div><br>
                 <label>Seleccione las profundidades:</label>
@@ -48,10 +48,16 @@
                     </select>
                 </div><br>
                 <label>Seleccione Fecha:</label>
-                <input id="time_muestreo" type="datetime-local" class="form-control"><br>
+                <input id="time_muestreo" type="date" class="form-control"><br>
             </div>
             <div class="col-8">
                 <div id="map"></div>
+                <br>
+                <select  class="form-control">
+                    <option>TEST1</option>
+                    <option>TEST2</option>
+                </select>
+                <br>
             </div>
         </div>
     </div>

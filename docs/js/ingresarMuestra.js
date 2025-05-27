@@ -148,7 +148,6 @@ function subirDatosMuestra(){
     get(child(ref(rtdb), 'Especie/')).then((items)=>{
         if(items.exists()){
             items.forEach((child)=>{
-                console.log(document.getElementById('0m'+child.key).value)
                 let especie_data = {
                     '0m': document.getElementById('0m'+child.key).value,
                     '5m': document.getElementById('5m'+child.key).value,
