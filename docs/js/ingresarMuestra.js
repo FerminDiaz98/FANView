@@ -55,6 +55,7 @@ let muestra_data = {}
 let tem_data = {}
 let sal_data = {}
 let oxi_data = {}
+let especie_data = {}
 
 const subirDatos = document.getElementById("ingresar_datos");
 
@@ -100,6 +101,10 @@ function mostrarResumen(){
         '15m': document.getElementById('15moxi').value,
     }
 
+    muestra_data = Object.assign({Temperatura: tem_data},muestra_data)
+    muestra_data = Object.assign({Salinidad: sal_data},muestra_data)
+    muestra_data = Object.assign({Oxígeno: oxi_data},muestra_data)
+
     resumenHTML.innerHTML = 
         `<div><h4>Resumen de datos ingresados</h4>
             <p>Empresa: `+muestra_data.Empresa+`</p>
@@ -107,9 +112,9 @@ function mostrarResumen(){
             <p>Fecha y Hora de Muestreo: `+muestra_data.Fecha_Muestreo+`</p>
             <p>Fecha y Hora de Recepción: `+muestra_data.Fecha_Recepcion+`</p>
             <p>Fecha y Hora de Análisis: `+muestra_data.Fecha_Analisis+`</p>
-            <p>Temperatura: 0m = `+tem_data["0m"]+`°C, 5m = `+tem_data["5m"]+`°C, 10m = `+tem_data["10m"]+`°C, 15m = `+tem_data["15m"]+`°C</p>
-            <p>Salinidad: 0m = `+sal_data["0m"]+`PSU, 5m = `+sal_data["5m"]+`PSU, 10m = `+sal_data["10m"]+`PSU, 15m = `+sal_data["15m"]+`PSU</p>
-            <p>Oxígeno: 0m = `+oxi_data["0m"]+`mg/L, 5m = `+oxi_data["5m"]+`mg/L, 10m = `+oxi_data["10m"]+`mg/L, 15m = `+oxi_data["15m"]+`mg/L</p>
+            <p>Temperatura: 0m = `+muestra_data.Temperatura["0m"]+`°C, 5m = `+muestra_data.Temperatura["5m"]+`°C, 10m = `+muestra_data.Temperatura["10m"]+`°C, 15m = `+muestra_data.Temperatura["15m"]+`°C</p>
+            <p>Salinidad: 0m = `+muestra_data.Salinidad["0m"]+`PSU, 5m = `+muestra_data.Salinidad["5m"]+`PSU, 10m = `+muestra_data.Salinidad["10m"]+`PSU, 15m = `+muestra_data.Salinidad["15m"]+`PSU</p>
+            <p>Oxígeno: 0m = `+muestra_data.Oxígeno["0m"]+`mg/L, 5m = `+muestra_data.Oxígeno["5m"]+`mg/L, 10m = `+muestra_data.Oxígeno["10m"]+`mg/L, 15m = `+muestra_data.Oxígeno["15m"]+`mg/L</p>
             <p>Disco Secchi: `+muestra_data.Disco_Secchi+`m</p></div>`;
 
     get(child(ref(rtdb), 'Especie/')).then((items)=>{
@@ -144,16 +149,14 @@ subirDatos.addEventListener('click', function(){
     }
 })
 
-function subirDatosMuestra(){
+async function subirDatosMuestra(){
     console.log("subir datos muestra button")
     //Muestra_EMPRESA_CENTRO_(TODAY)
     let today = new Date()
-    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today), muestra_data)
-    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Temperatura/'), tem_data)
-    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Salinidad/'), sal_data)
-    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Oxígeno/'), oxi_data)
-    
-    get(child(ref(rtdb), 'Especie/')).then((items)=>{
+
+    especie_data = {}
+
+    await get(child(ref(rtdb), 'Especie/')).then((items)=>{
         if(items.exists()){
             items.forEach((child)=>{
                 if(document.getElementById('0m'+child.key).value == document.getElementById('5m'+child.key).value &&
@@ -163,16 +166,22 @@ function subirDatosMuestra(){
                     console.log("Especie ignorada")
                 }
                 else{
-                    let especie_data = {
+                    let especie = {
                     '0m': document.getElementById('0m'+child.key).value,
                     '5m': document.getElementById('5m'+child.key).value,
                     '10m': document.getElementById('10m'+child.key).value,
-                    '15m': document.getElementById('15m'+child.key).value,
-                }
-                    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Especie/'+child.key+'/'), especie_data)
+                    '15m': document.getElementById('15m'+child.key).value,}
+
+                    let especie_name = child.key
+                    especie_data = Object.assign({[especie_name]: especie},especie_data)
+                                                          
                 }
             })
         }
     })
+
+    muestra_data = Object.assign(muestra_data,{Especie: especie_data})
+    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today), muestra_data)
+
     // submitForm.reset() note to self, fix this later (alert is enough?)
 }

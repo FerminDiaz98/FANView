@@ -36,18 +36,18 @@ function loadMuestras(){
     get(child(ref(rtdb), 'Muestra/')).then((items)=>{
         if(items.exists()){
             items.forEach((child)=>{
-                if(child.val()["Time_Analisis"] === undefined){
+                if(child.val()["Fecha_Analisis"] === undefined){
                     console.log("FECHA ANALISIS UNDEFINED")
                 }
                 else{
                     console.log(child.val())
-                    if(child.val()["Time_Analisis"].split(" ")[0] == fecha_input.value){
+                    if(child.val()["Fecha_Analisis"].split("T")[0] == fecha_input.value){
                         console.log(child.val())
                         child.forEach((especie)=>{
                             tablaGeo.innerHTML +=`<tr>
                             <td>`+child.val()['Empresa']+`</td>
                             <td>`+child.val()['Centro']+`</td>
-                            <td>`+especie.key()['Especie']+`</td>
+                            <td>`+especie.val()['Especie']+`</td>
                             <td>`+especie.val()['Profundidad_0m']+`</td>
                             <td>`+especie.val()['Profundidad_5m']+`</td>
                             <td>`+especie.val()['Profundidad_10m']+`</td>

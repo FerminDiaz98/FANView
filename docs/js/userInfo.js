@@ -14,11 +14,11 @@ function updateUserProfile(user){
     const userEmail = user.email;
     const userProfilePicture = user.photoURL;
 
-    if(document.getElementById("userName") != undefined){
+    if(document.getElementById("userName") !== undefined){
       document.getElementById("userName").textContent = userName}
-    if(document.getElementById("userEmail") != undefined){
+    if(document.getElementById("userEmail") !== undefined){
       document.getElementById("userEmail").textContent = userEmail}
-    if(document.getElementById("userProfilePicture") != undefined){
+    if(document.getElementById("userProfilePicture") !== undefined){
       document.getElementById("userProfilePicture").src = userProfilePicture} 
 }
 
@@ -28,15 +28,15 @@ function checkUserRole(user){
      if (!!idTokenResult.claims.admin) {
         // console.log("admin");
         // Revisa si existe un elemento con id admin o supervisor, y si existe, lo habilita
-        if(document.getElementById("admin")!=undefined){
+        if(document.getElementById("admin")!== undefined){
           document.getElementById("admin").disabled = false}
-        if(document.getElementById("supervisor")!=undefined){
+        if(document.getElementById("supervisor")!== undefined){
           document.getElementById("supervisor").disabled = false}
      }
      else if (!!idTokenResult.claims.supervisor){
         // console.log("supervisor")
         // Revisa si existe un elemento con id admin o supervisor, y si existe, lo habilita
-        if(document.getElementById("supervisor")!=undefined){
+        if(document.getElementById("supervisor")!== undefined){
           document.getElementById("supervisor").disabled = false}
         
         //Si esta dentro de un html con tag 'adminonly', te manda al login

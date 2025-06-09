@@ -27,7 +27,7 @@ const fanviewConfig ={
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(fanviewConfig);
 export const auth = getAuth(app);
 export const rtdb = getDatabase(); //realtime db
 // export const fsdb = getFirestore(); //firestore db
