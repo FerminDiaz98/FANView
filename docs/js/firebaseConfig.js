@@ -15,6 +15,17 @@ const firebaseConfig = {
   appId: "1:299143604685:web:4f32e72b0b176fdffb7c84"
 };
 
+const fanviewConfig ={
+  apiKey: "AIzaSyBuGvpdzs-5b61k4dKEhMkhG2V3lkmHbWA",
+  authDomain: "fanview-f356a.firebaseapp.com",
+  databaseURL: "https://fanview-f356a-default-rtdb.firebaseio.com",
+  projectId: "fanview-f356a",
+  storageBucket: "fanview-f356a.firebasestorage.app",
+  messagingSenderId: "1065518583838",
+  appId: "1:1065518583838:web:c3e685d2a761b6c4505e0f",
+  measurementId: "G-TF6ZMRH4J1"
+};
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

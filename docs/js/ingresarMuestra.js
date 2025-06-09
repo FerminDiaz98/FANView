@@ -29,10 +29,10 @@ function loopSpeciesSelect(){
                 especies_select.innerHTML += 
                 `<div class="mb-2 row">
                     <div class="col-3"><label>`+child.key+`</label></div>
-                    <div class="col-2"><input id="0m`+child.key+`" type="number" class="form-control" placeholder="0m" required></div>
-                    <div class="col-2"><input id="5m`+child.key+`" type="number" class="form-control" placeholder="5m" required></div>
-                    <div class="col-2"><input id="10m`+child.key+`" type="number" class="form-control" placeholder="10m" required></div>
-                    <div class="col-2"><input id="15m`+child.key+`" type="number" class="form-control" placeholder="15m" required></div>
+                    <div class="col-2"><input id="0m`+child.key+`" type="number" class="form-control" placeholder="0m"></div>
+                    <div class="col-2"><input id="5m`+child.key+`" type="number" class="form-control" placeholder="5m"></div>
+                    <div class="col-2"><input id="10m`+child.key+`" type="number" class="form-control" placeholder="10m"></div>
+                    <div class="col-2"><input id="15m`+child.key+`" type="number" class="form-control" placeholder="15m"></div>
                 </div>`;
             })
         }
@@ -72,9 +72,9 @@ function mostrarResumen(){
     muestra_data = {
         'Empresa': document.getElementById('empresa_select').value,
         'Centro': document.getElementById('centro_select').value,
-        'Time_Muestreo': document.getElementById('time_muestreo').value,
-        'Time_Recepcion': document.getElementById('time_recepcion').value,
-        'Time_Analisis': document.getElementById('time_analisis').value,
+        'Fecha_Muestreo': document.getElementById('fecha_muestreo').value,
+        'Fecha_Recepcion': document.getElementById('fecha_recepcion').value,
+        'Fecha_Analisis': document.getElementById('fecha_analisis').value,
         'Disco_Secchi': document.getElementById('disco_secchi').value,
         'Comportamiento': document.getElementById('comportamiento').value
     }
@@ -104,9 +104,9 @@ function mostrarResumen(){
         `<div><h4>Resumen de datos ingresados</h4>
             <p>Empresa: `+muestra_data.Empresa+`</p>
             <p>Centro: `+muestra_data.Centro+`</p>
-            <p>Fecha y Hora de Muestreo: `+muestra_data.Time_Muestreo+`</p>
-            <p>Fecha y Hora de Recepción: `+muestra_data.Time_Recepcion+`</p>
-            <p>Fecha y Hora de Análisis: `+muestra_data.Time_Analisis+`</p>
+            <p>Fecha y Hora de Muestreo: `+muestra_data.Fecha_Muestreo+`</p>
+            <p>Fecha y Hora de Recepción: `+muestra_data.Fecha_Recepcion+`</p>
+            <p>Fecha y Hora de Análisis: `+muestra_data.Fecha_Analisis+`</p>
             <p>Temperatura: 0m = `+tem_data["0m"]+`°C, 5m = `+tem_data["5m"]+`°C, 10m = `+tem_data["10m"]+`°C, 15m = `+tem_data["15m"]+`°C</p>
             <p>Salinidad: 0m = `+sal_data["0m"]+`PSU, 5m = `+sal_data["5m"]+`PSU, 10m = `+sal_data["10m"]+`PSU, 15m = `+sal_data["15m"]+`PSU</p>
             <p>Oxígeno: 0m = `+oxi_data["0m"]+`mg/L, 5m = `+oxi_data["5m"]+`mg/L, 10m = `+oxi_data["10m"]+`mg/L, 15m = `+oxi_data["15m"]+`mg/L</p>
@@ -115,12 +115,20 @@ function mostrarResumen(){
     get(child(ref(rtdb), 'Especie/')).then((items)=>{
         if(items.exists()){
             items.forEach((child)=>{
-                resumenHTML.innerHTML +=  
-                `<p>`+child.key+`:
-                ` +document.getElementById('0m'+child.key).value+`,
-                ` +document.getElementById('5m'+child.key).value+`,
-                ` +document.getElementById('10m'+child.key).value+`,
-                ` +document.getElementById('15m'+child.key).value+`</p>`;
+                if(document.getElementById('0m'+child.key).value == document.getElementById('5m'+child.key).value &&
+                document.getElementById('5m'+child.key).value == document.getElementById('10m'+child.key).value &&
+                document.getElementById('10m'+child.key).value == document.getElementById('15m'+child.key).value &&
+                document.getElementById('15m'+child.key).value == ''){
+                    console.log("Especie ignorada")
+                }
+                else{
+                    resumenHTML.innerHTML +=  
+                    `<p>`+child.key+`:
+                    ` +document.getElementById('0m'+child.key).value+`,
+                    ` +document.getElementById('5m'+child.key).value+`,
+                    ` +document.getElementById('10m'+child.key).value+`,
+                    ` +document.getElementById('15m'+child.key).value+`</p>`;
+                }
             })
         }
     })
@@ -148,13 +156,21 @@ function subirDatosMuestra(){
     get(child(ref(rtdb), 'Especie/')).then((items)=>{
         if(items.exists()){
             items.forEach((child)=>{
-                let especie_data = {
+                if(document.getElementById('0m'+child.key).value == document.getElementById('5m'+child.key).value &&
+                document.getElementById('5m'+child.key).value == document.getElementById('10m'+child.key).value &&
+                document.getElementById('10m'+child.key).value == document.getElementById('15m'+child.key).value &&
+                document.getElementById('15m'+child.key).value == ''){
+                    console.log("Especie ignorada")
+                }
+                else{
+                    let especie_data = {
                     '0m': document.getElementById('0m'+child.key).value,
                     '5m': document.getElementById('5m'+child.key).value,
                     '10m': document.getElementById('10m'+child.key).value,
                     '15m': document.getElementById('15m'+child.key).value,
                 }
-                set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Especie/'+child.key+'/'), especie_data)
+                    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today+'/Especie/'+child.key+'/'), especie_data)
+                }
             })
         }
     })

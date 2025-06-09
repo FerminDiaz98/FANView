@@ -4,6 +4,8 @@ import { ref, child, get, set } from "https://www.gstatic.com/firebasejs/9.8.1/f
 const empresa_select = document.getElementById('empresa_select')
 const especie_select = document.getElementById('especie_select')
 
+const fecha_input = document.getElementById('time_muestreo')
+const tablaGeo = document.getElementById('tablaGeo')
 
 function getSelectData(element){
     // console.log(element.dataset.db+'/')
@@ -29,10 +31,50 @@ function loadData(){
 
 window.addEventListener('load', loadData())
 
+function loadMuestras(){
+    console.log(fecha_input.value)
+    get(child(ref(rtdb), 'Muestra/')).then((items)=>{
+        if(items.exists()){
+            items.forEach((child)=>{
+                if(child.val()["Time_Analisis"] === undefined){
+                    console.log("FECHA ANALISIS UNDEFINED")
+                }
+                else{
+                    console.log(child.val())
+                    if(child.val()["Time_Analisis"].split(" ")[0] == fecha_input.value){
+                        console.log(child.val())
+                        child.forEach((especie)=>{
+                            tablaGeo.innerHTML +=`<tr>
+                            <td>`+child.val()['Empresa']+`</td>
+                            <td>`+child.val()['Centro']+`</td>
+                            <td>`+especie.key()['Especie']+`</td>
+                            <td>`+especie.val()['Profundidad_0m']+`</td>
+                            <td>`+especie.val()['Profundidad_5m']+`</td>
+                            <td>`+especie.val()['Profundidad_10m']+`</td>
+                            <td>`+especie.val()['Profundidad_15m']+`</td>
+                            <td>`+especie.val()['Comportamiento']+`</td>
+                            </tr>`
+                        })
+                        
+                    }
+                }
+            })
+            // element.disabled = false;
+        }
+    })
+}
+
+fecha_input.addEventListener('change', loadMuestras)
+
+//este es el mapa
 var map = L.map('map').setView([-42.1, -73.1], 8);
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: "© Esri, Maxar, Earthstar Geographics"
 }).addTo(map);
 
+L.tileLayer('https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    opacity: 0.9
+}).addTo(map);
