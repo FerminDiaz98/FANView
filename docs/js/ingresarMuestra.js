@@ -5,12 +5,12 @@ const empresa_select = document.getElementById('empresa_select')
 const centro_select = document.getElementById('centro_select')
 const especies_select = document.getElementById('especies_select')
 
-function getSelectData(element){
+function getSelectData(element) {
     // console.log(element.dataset.db+'/')
-    get(child(ref(rtdb), element.dataset.db+'/')).then((items)=>{
-        if(items.exists()){
+    get(child(ref(rtdb), element.dataset.db + '/')).then((items) => {
+        if (items.exists()) {
             // console.log(items.key,items.val())
-            items.forEach((child)=>{
+            items.forEach((child) => {
                 // console.log(child.key,child.val())
                 let opt = document.createElement('option');
                 opt.value = child.key;
@@ -22,24 +22,24 @@ function getSelectData(element){
     })
 }
 
-function loopSpeciesSelect(){
-    get(child(ref(rtdb), 'Especie/')).then((items)=>{
-        if(items.exists()){
-            items.forEach((child)=>{
-                especies_select.innerHTML += 
-                `<div class="mb-2 row">
-                    <div class="col-3"><label>`+child.key+`</label></div>
-                    <div class="col-2"><input id="0m`+child.key+`" type="number" class="form-control" placeholder="0m"></div>
-                    <div class="col-2"><input id="5m`+child.key+`" type="number" class="form-control" placeholder="5m"></div>
-                    <div class="col-2"><input id="10m`+child.key+`" type="number" class="form-control" placeholder="10m"></div>
-                    <div class="col-2"><input id="15m`+child.key+`" type="number" class="form-control" placeholder="15m"></div>
+function loopSpeciesSelect() {
+    get(child(ref(rtdb), 'Especie/')).then((items) => {
+        if (items.exists()) {
+            items.forEach((child) => {
+                especies_select.innerHTML +=
+                    `<div class="mb-2 row">
+                    <div class="col-3"><label>`+ child.key + `</label></div>
+                    <div class="col-2"><input id="0m`+ child.key + `" type="number" class="form-control" placeholder="0m"></div>
+                    <div class="col-2"><input id="5m`+ child.key + `" type="number" class="form-control" placeholder="5m"></div>
+                    <div class="col-2"><input id="10m`+ child.key + `" type="number" class="form-control" placeholder="10m"></div>
+                    <div class="col-2"><input id="15m`+ child.key + `" type="number" class="form-control" placeholder="15m"></div>
                 </div>`;
             })
         }
     })
 }
 
-function loadData(){
+function loadData() {
     getSelectData(empresa_select)
     getSelectData(centro_select)
     loopSpeciesSelect()
@@ -58,18 +58,19 @@ let oxi_data = {}
 let especie_data = {}
 
 const subirDatos = document.getElementById("ingresar_datos");
+const descargarInforme = document.getElementById('descargar_informe');
 
-mostrarResumenBtn.addEventListener('click', function(){
-    if(submitForm.checkValidity()){
+mostrarResumenBtn.addEventListener('click', function () {
+    if (submitForm.checkValidity()) {
         mostrarResumen();
         window.scrollTo(0, document.body.scrollHeight);
     }
-    else{
+    else {
         alert("Uno o mas campos están incompletos.");
     }
 })
 
-function mostrarResumen(){
+async function mostrarResumen() {
     muestra_data = {
         'Empresa': document.getElementById('empresa_select').value,
         'Centro': document.getElementById('centro_select').value,
@@ -101,87 +102,90 @@ function mostrarResumen(){
         '15m': document.getElementById('15moxi').value,
     }
 
-    muestra_data = Object.assign({Temperatura: tem_data},muestra_data)
-    muestra_data = Object.assign({Salinidad: sal_data},muestra_data)
-    muestra_data = Object.assign({Oxígeno: oxi_data},muestra_data)
+    especie_data = { }
 
-    resumenHTML.innerHTML = 
+    muestra_data = Object.assign({ Temperatura: tem_data }, muestra_data)
+    muestra_data = Object.assign({ Salinidad: sal_data }, muestra_data)
+    muestra_data = Object.assign({ Oxígeno: oxi_data }, muestra_data)
+
+    resumenHTML.innerHTML =
         `<div><h4>Resumen de datos ingresados</h4>
-            <p>Empresa: `+muestra_data.Empresa+`</p>
-            <p>Centro: `+muestra_data.Centro+`</p>
-            <p>Fecha y Hora de Muestreo: `+muestra_data.Fecha_Muestreo+`</p>
-            <p>Fecha y Hora de Recepción: `+muestra_data.Fecha_Recepcion+`</p>
-            <p>Fecha y Hora de Análisis: `+muestra_data.Fecha_Analisis+`</p>
-            <p>Temperatura: 0m = `+muestra_data.Temperatura["0m"]+`°C, 5m = `+muestra_data.Temperatura["5m"]+`°C, 10m = `+muestra_data.Temperatura["10m"]+`°C, 15m = `+muestra_data.Temperatura["15m"]+`°C</p>
-            <p>Salinidad: 0m = `+muestra_data.Salinidad["0m"]+`PSU, 5m = `+muestra_data.Salinidad["5m"]+`PSU, 10m = `+muestra_data.Salinidad["10m"]+`PSU, 15m = `+muestra_data.Salinidad["15m"]+`PSU</p>
-            <p>Oxígeno: 0m = `+muestra_data.Oxígeno["0m"]+`mg/L, 5m = `+muestra_data.Oxígeno["5m"]+`mg/L, 10m = `+muestra_data.Oxígeno["10m"]+`mg/L, 15m = `+muestra_data.Oxígeno["15m"]+`mg/L</p>
-            <p>Disco Secchi: `+muestra_data.Disco_Secchi+`m</p></div>`;
+            <p>Empresa: `+ muestra_data.Empresa + `</p>
+            <p>Centro: `+ muestra_data.Centro + `</p>
+            <p>Fecha y Hora de Muestreo: `+ muestra_data.Fecha_Muestreo + `</p>
+            <p>Fecha y Hora de Recepción: `+ muestra_data.Fecha_Recepcion + `</p>
+            <p>Fecha y Hora de Análisis: `+ muestra_data.Fecha_Analisis + `</p>
+            <p>Temperatura: 0m = `+ muestra_data.Temperatura["0m"] + `°C, 5m = ` + muestra_data.Temperatura["5m"] + `°C, 10m = ` + muestra_data.Temperatura["10m"] + `°C, 15m = ` + muestra_data.Temperatura["15m"] + `°C</p>
+            <p>Salinidad: 0m = `+ muestra_data.Salinidad["0m"] + `PSU, 5m = ` + muestra_data.Salinidad["5m"] + `PSU, 10m = ` + muestra_data.Salinidad["10m"] + `PSU, 15m = ` + muestra_data.Salinidad["15m"] + `PSU</p>
+            <p>Oxígeno: 0m = `+ muestra_data.Oxígeno["0m"] + `mg/L, 5m = ` + muestra_data.Oxígeno["5m"] + `mg/L, 10m = ` + muestra_data.Oxígeno["10m"] + `mg/L, 15m = ` + muestra_data.Oxígeno["15m"] + `mg/L</p>
+            <p>Disco Secchi: `+ muestra_data.Disco_Secchi + `m</p></div>`;
 
-    get(child(ref(rtdb), 'Especie/')).then((items)=>{
-        if(items.exists()){
-            items.forEach((child)=>{
-                if(document.getElementById('0m'+child.key).value == document.getElementById('5m'+child.key).value &&
-                document.getElementById('5m'+child.key).value == document.getElementById('10m'+child.key).value &&
-                document.getElementById('10m'+child.key).value == document.getElementById('15m'+child.key).value &&
-                document.getElementById('15m'+child.key).value == ''){
+    await get(child(ref(rtdb), 'Especie/')).then((items) => {
+        if (items.exists()) {
+            items.forEach((child) => {
+                if (document.getElementById('0m' + child.key).value == document.getElementById('5m' + child.key).value &&
+                    document.getElementById('5m' + child.key).value == document.getElementById('10m' + child.key).value &&
+                    document.getElementById('10m' + child.key).value == document.getElementById('15m' + child.key).value &&
+                    document.getElementById('15m' + child.key).value == '') {
                     console.log("Especie ignorada")
                 }
-                else{
-                    resumenHTML.innerHTML +=  
-                    `<p>`+child.key+`:
-                    ` +document.getElementById('0m'+child.key).value+`,
-                    ` +document.getElementById('5m'+child.key).value+`,
-                    ` +document.getElementById('10m'+child.key).value+`,
-                    ` +document.getElementById('15m'+child.key).value+`</p>`;
+                else {
+                    let especie = {
+                        '0m': document.getElementById('0m' + child.key).value,
+                        '5m': document.getElementById('5m' + child.key).value,
+                        '10m': document.getElementById('10m' + child.key).value,
+                        '15m': document.getElementById('15m' + child.key).value,
+                    }
+                    resumenHTML.innerHTML +=
+                        `<p>` + child.key + `:
+                    ` + especie["0m"] + `,
+                    ` + especie["5m"] + `,
+                    ` + especie["10m"] + `,
+                    ` + especie["15m"] + `</p>`;
+
+                    especie_data = Object.assign({[child.key]: especie }, especie_data)
                 }
             })
         }
     })
+
+    muestra_data = Object.assign(muestra_data, { Especie: especie_data })
+    console.log(muestra_data)
     subirDatos.style.display = "block"
+    descargarInforme.style.display = "block"
 }
 
-subirDatos.addEventListener('click', function(){
-    if(true){
+subirDatos.addEventListener('click', function () {
+    if (true) {
         subirDatosMuestra();
     }
-    else{
+    else {
         alert("Testalert");
     }
 })
 
-async function subirDatosMuestra(){
+function subirDatosMuestra() {
     console.log("subir datos muestra button")
     //Muestra_EMPRESA_CENTRO_(TODAY)
     let today = new Date()
-
-    especie_data = {}
-
-    await get(child(ref(rtdb), 'Especie/')).then((items)=>{
-        if(items.exists()){
-            items.forEach((child)=>{
-                if(document.getElementById('0m'+child.key).value == document.getElementById('5m'+child.key).value &&
-                document.getElementById('5m'+child.key).value == document.getElementById('10m'+child.key).value &&
-                document.getElementById('10m'+child.key).value == document.getElementById('15m'+child.key).value &&
-                document.getElementById('15m'+child.key).value == ''){
-                    console.log("Especie ignorada")
-                }
-                else{
-                    let especie = {
-                    '0m': document.getElementById('0m'+child.key).value,
-                    '5m': document.getElementById('5m'+child.key).value,
-                    '10m': document.getElementById('10m'+child.key).value,
-                    '15m': document.getElementById('15m'+child.key).value,}
-
-                    let especie_name = child.key
-                    especie_data = Object.assign({[especie_name]: especie},especie_data)
-                                                          
-                }
-            })
-        }
-    })
-
-    muestra_data = Object.assign(muestra_data,{Especie: especie_data})
-    set(ref(rtdb, 'Muestra/'+ muestra_data.Empresa+'_'+muestra_data.Centro+'_'+today), muestra_data)
-
+    set(ref(rtdb, 'Muestra/' + muestra_data.Empresa + '_' + muestra_data.Centro + '_' + today), muestra_data)
     // submitForm.reset() note to self, fix this later (alert is enough?)
+}
+
+descargarInforme.addEventListener('click', function () {
+    if (true) {
+        descargarExcel()
+    }
+    else {
+        alert("Testalert");
+    }
+})
+
+function descargarExcel() {
+    var data1 = [{ Empresa: [muestra_data.Empresa], Centro: [muestra_data.Centro], ['Fecha Muestreo']:[muestra_data.Fecha_Muestreo]},
+                {Empresa: ['test'], Centro: 20 }];
+    var data2 = [{a:1,b:2,c:3},{b:3}]
+    var opts = [{ sheetid: 'One', header: true }];
+    var res = alasql('SELECT * INTO XLSX("restest344b.xlsx",?) FROM ?',
+        [opts, [data1]]);
 }
