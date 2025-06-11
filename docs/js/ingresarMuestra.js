@@ -56,6 +56,7 @@ let tem_data = {}
 let sal_data = {}
 let oxi_data = {}
 let especie_data = {}
+let especie_meta = {}
 
 const subirDatos = document.getElementById("ingresar_datos");
 const descargarInforme = document.getElementById('descargar_informe');
@@ -102,7 +103,8 @@ async function mostrarResumen() {
         '15m': document.getElementById('15moxi').value,
     }
 
-    especie_data = { }
+    especie_data = {}
+    especie_meta = {}
 
     muestra_data = Object.assign({ Temperatura: tem_data }, muestra_data)
     muestra_data = Object.assign({ Salinidad: sal_data }, muestra_data)
@@ -127,7 +129,7 @@ async function mostrarResumen() {
                     document.getElementById('5m' + child.key).value == document.getElementById('10m' + child.key).value &&
                     document.getElementById('10m' + child.key).value == document.getElementById('15m' + child.key).value &&
                     document.getElementById('15m' + child.key).value == '') {
-                    console.log("Especie ignorada")
+                    // console.log("Especie ignorada")
                 }
                 else {
                     let especie = {
@@ -136,6 +138,11 @@ async function mostrarResumen() {
                         '10m': document.getElementById('10m' + child.key).value,
                         '15m': document.getElementById('15m' + child.key).value,
                     }
+                    let especie_values = {
+                        'Grupo': child.val()['Grupo'],
+                        'Genero': child.val()['Genero'],
+                        'Nocividad': child.val()['Nocividad']
+                    }
                     resumenHTML.innerHTML +=
                         `<p>` + child.key + `:
                     ` + especie["0m"] + `,
@@ -143,14 +150,15 @@ async function mostrarResumen() {
                     ` + especie["10m"] + `,
                     ` + especie["15m"] + `</p>`;
 
-                    especie_data = Object.assign({[child.key]: especie }, especie_data)
+                    especie_data = Object.assign({ [child.key]: especie }, especie_data)
+                    especie_meta = Object.assign({ [child.key]: especie_values }, especie_meta)
                 }
             })
         }
     })
 
     muestra_data = Object.assign(muestra_data, { Especie: especie_data })
-    console.log(muestra_data)
+    // console.log(muestra_data)
     subirDatos.style.display = "block"
     descargarInforme.style.display = "block"
 }
@@ -165,7 +173,6 @@ subirDatos.addEventListener('click', function () {
 })
 
 function subirDatosMuestra() {
-    console.log("subir datos muestra button")
     //Muestra_EMPRESA_CENTRO_(TODAY)
     let today = new Date()
     set(ref(rtdb, 'Muestra/' + muestra_data.Empresa + '_' + muestra_data.Centro + '_' + today), muestra_data)
@@ -182,10 +189,44 @@ descargarInforme.addEventListener('click', function () {
 })
 
 function descargarExcel() {
-    var data1 = [{ Empresa: [muestra_data.Empresa], Centro: [muestra_data.Centro], ['Fecha Muestreo']:[muestra_data.Fecha_Muestreo]},
-                {Empresa: ['test'], Centro: 20 }];
-    var data2 = [{a:1,b:2,c:3},{b:3}]
-    var opts = [{ sheetid: 'One', header: true }];
-    var res = alasql('SELECT * INTO XLSX("restest344b.xlsx",?) FROM ?',
-        [opts, [data1]]);
+    var planilla = []
+    Object.keys(especie_data).forEach(especie => {
+        Object.keys(especie_data[especie]).forEach(profundidad => {
+            // console.log(especie, profundidad, especie_data[especie][profundidad])
+            if (especie_data[especie][profundidad] != '') {
+                planilla.push({
+                    ['Empresa']: muestra_data.Empresa,
+                    ['Centro']: muestra_data.Centro,
+                    ['Fecha Muestra']: muestra_data.Fecha_Muestreo.split("T")[0],
+                    ['Hora Muestra']: muestra_data.Fecha_Muestreo.split("T")[1],
+                    ['Fecha Analisis']: muestra_data.Fecha_Analisis.split("T")[0],
+                    ['Hora Analisis']: muestra_data.Fecha_Analisis.split("T")[1],
+                    ['Disco Secchi']: muestra_data.Disco_Secchi,
+                    ['Conducta Peces']: muestra_data.Comportamiento,
+                    ['Profundidad']: profundidad,
+                    ['Grupo']: especie_meta[especie]['Grupo'],
+                    ['Genero']: especie_meta[especie]['Genero'],
+                    ['Especie']: especie,
+                    ['Cantidad']: especie_data[especie][profundidad],
+                    ['Nocivo']: especie_meta[especie]['Nocividad'],
+                    ['Temperatura']: tem_data[profundidad],
+                    ['Salinidad']: sal_data[profundidad],
+                    ['Oxígeno']: oxi_data[profundidad]
+                })
+            }
+        })
+    })
+
+    // console.log(planilla)
+    // planilla['A1'].s = {
+    //     font: {
+    //         bold: true,
+    //         color: "#F2F2F2"
+    //     },
+    // }
+    // var data2 = [{ a: 1, b: 2, c: 3 }, { b: 3 }]
+    let today = new Date()
+    var opts = [{ sheetid: 'Planilla', header: true }];//,[sheetid: data2, header:true];
+    var res = alasql('SELECT * INTO XLSX("Informe_'+today+'.xlsx",?) FROM ?',
+        [opts, [planilla]]);
 }
